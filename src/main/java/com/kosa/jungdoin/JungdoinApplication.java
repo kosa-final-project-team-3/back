@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JungdoinApplication {
 
     public static void main(String[] args) {
+        System.setProperty("djl.logging.level", "DEBUG");
+
         SpringApplication.run(JungdoinApplication.class, args);
     }
 

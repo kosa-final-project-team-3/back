@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Generator</title>
+</head>
+<body>
+
+<h1>Generate Feedback</h1>
+
+<!-- POST 요청을 보내는 HTML Form -->
+<h2>Using HTML Form (POST)</h2>
+<form id="feedbackForm">
+    <label for="question">Question:</label>
+    <input type="text" id="question" name="question" required>
+    <br><br>
+
+    <label for="preset">Preset:</label>
+    <input type="text" id="preset" name="preset" required>
+    <br><br>
+
+    <button type="submit">Generate Feedback</button>
+</form>
+
+<br><hr><br>
+
+<!-- JavaScript Fetch API로 POST 요청 보내기 -->
+<h2>Using Fetch API (POST)</h2>
+<label for="js-question">Question:</label>
+<input type="text" id="js-question" required>
+<br><br>
+
+<label for="js-preset">Preset:</label>
+<input type="text" id="js-preset" required>
+<br><br>
+
+<button id="generateFeedback">Generate Feedback via Fetch</button>
+
+<h3>Generated Feedback:</h3>
+<pre id="output"></pre>
+
+<script>
+    // HTML Form의 제출을 처리하여 JSON으로 POST 요청을 보냄
+    document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 기본 제출 방지
+
+        const question = document.getElementById('question').value;
+        const preset = document.getElementById('preset').value;
+
+        // POST 요청을 보낼 URL
+        const url = 'http://localhost:8080/api/feedback/generate';
+
+        // 요청할 데이터
+        const data = {
+            question: question,
+            preset: preset
+        };
+
+        // Fetch API를 통해 POST 요청을 보냄
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버에서 받은 결과를 화면에 출력
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+
+    // Fetch API 버튼 클릭 이벤트
+    document.getElementById('generateFeedback').addEventListener('click', function() {
+        const question = document.getElementById('js-question').value;
+        const preset = document.getElementById('js-preset').value;
+
+        // POST 요청을 보낼 URL
+        const url = 'http://localhost:8080/api/feedback/generate';
+
+        // 요청할 데이터
+        const data = {
+            question: question,
+            preset: preset
+        };
+
+        // Fetch API를 통해 POST 요청을 보냄
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버에서 받은 결과를 화면에 출력
+                document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+
+</body>
+</html>
