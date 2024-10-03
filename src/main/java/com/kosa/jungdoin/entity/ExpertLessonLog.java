@@ -1,8 +1,5 @@
 package com.kosa.jungdoin.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,8 +8,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "expert_lesson_logs")
 public class ExpertLessonLog extends BaseEntity {
 	@Id

@@ -8,8 +8,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@Getter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "reports")
 public class Report extends BaseEntity {
 	@Id
@@ -21,7 +29,7 @@ public class Report extends BaseEntity {
 	private Member member;
 	@ManyToOne
 	@JoinColumn(name = "report_type_code", nullable = false)
-	private String reportTypeCode;
+	private ReportType reportTypeCode;
 	@Column(name = "content", length = 2000, nullable = false)
 	private String content;
 	@Column(name = "target_id", nullable = false)
