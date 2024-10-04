@@ -20,17 +20,17 @@ import java.math.BigDecimal;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "expert_reviews")
-public class ExpertReview extends BaseEntity {
+@Table(name = "trainer_reviews")
+public class TrainerReview extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "expert_review_seq")
-	private Long expertReviewSeq;
+	@Column(name = "trainer_review_seq")
+	private Long trainerReviewSeq;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false, insertable = false, updatable = false)
+	private Trainer trainer;
 	@ManyToOne
-	@JoinColumn(name = "member_id", nullable = false)
+	@JoinColumn(name = "member_id", nullable = false, insertable = false, updatable = false)
 	private Member member;
 	@Column(name = "satisfaction", precision = 2, scale = 1, nullable = false)
 	private BigDecimal satisfaction;

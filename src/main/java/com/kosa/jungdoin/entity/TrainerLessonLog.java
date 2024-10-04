@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "expert_lesson_logs")
-public class ExpertLessonLog extends BaseEntity {
+@Table(name = "trainer_lesson_logs")
+public class TrainerLessonLog extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "lesson_log_id")

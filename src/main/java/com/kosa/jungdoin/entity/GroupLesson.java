@@ -28,8 +28,8 @@ public class GroupLesson extends BaseEntity {
 	@Column(name = "group_lesson_id")
 	private Long groupLessonId;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Trainer trainer;
 	@Column(name = "max_cnt", nullable = false)
 	private Integer maxCnt;
 	@Column(name = "start_date", nullable = false)

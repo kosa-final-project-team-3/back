@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "experts")
-public class Expert extends Member {
+@Table(name = "trainers")
+public class Trainer extends BaseMember {
 	@ManyToOne
 	@JoinColumn(name = "exercise_category_code", nullable = false)
 	private ExerciseCategory exerciseCategory;

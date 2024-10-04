@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "expert_profile_categories")
-public class ExpertProfileCategory {
+@Table(name = "trainer_profile_categories")
+public class TrainerProfileCategory {
 	@Id
 	@Column(name = "category_code", length = 10, nullable = false)
 	private String categoryCode;

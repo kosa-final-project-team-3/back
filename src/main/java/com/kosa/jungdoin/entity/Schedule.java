@@ -27,8 +27,8 @@ public class Schedule extends BaseEntity {
 	@Column(name = "schedule_seq")
 	private Long scheduleSeq;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Trainer trainer;
 	@ManyToOne
 	@JoinColumn(name = "contract_id", nullable = false)
 	private Contract contract;

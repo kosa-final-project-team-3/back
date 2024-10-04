@@ -20,18 +20,18 @@ import java.time.LocalDate;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "expert_profiles")
-public class ExpertProfile extends BaseEntity {
+@Table(name = "trainer_profiles")
+public class TrainerProfile extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "expert_profile_id")
-	private Long expertProfileId;
+	@Column(name = "trainer_profile_id")
+	private Long trainerProfileId;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Trainer trainer;
 	@ManyToOne
 	@JoinColumn(name = "category_code", nullable = false)
-	private ExpertProfileCategory categoryCode;
+	private TrainerProfileCategory categoryCode;
 	@Column(name = "title", nullable = false)
 	private String title;
 	@Column(name = "start_date", nullable = false)
