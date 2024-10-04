@@ -25,8 +25,8 @@ public class OnlineLesson extends BaseEntity {
 	@Column(name = "online_lesson_id")
 	private Long onlineLessonId;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Trainer trainer;
 	@Column(name = "title", length = 20, nullable = false)
 	private String title;
 	@Column(name = "content", length = 2000, nullable = false)

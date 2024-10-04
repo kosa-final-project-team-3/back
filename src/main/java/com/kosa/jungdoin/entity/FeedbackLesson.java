@@ -25,8 +25,8 @@ public class FeedbackLesson extends BaseEntity {
 	@Column(name = "feedback_lesson_id")
 	private Long feedbackLessonId;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Trainer trainer;
 	@Column(name = "content", length = 2000, nullable = false)
 	private String content;
 	@Column(name = "price", nullable = false)

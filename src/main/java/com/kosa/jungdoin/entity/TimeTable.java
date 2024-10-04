@@ -27,8 +27,8 @@ public class TimeTable extends BaseEntity {
 	@Column(name = "time_table_id")
 	private Long timeTableId;
 	@ManyToOne
-	@JoinColumn(name = "expert_id", nullable = false)
-	private Expert expert;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Trainer trainer;
 	@Column(name = "day", length = 2, nullable = false)
 	private String day;
 	@Column(name = "start_time", nullable = false)
