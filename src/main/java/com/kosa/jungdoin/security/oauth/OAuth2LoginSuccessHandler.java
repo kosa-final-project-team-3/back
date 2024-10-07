@@ -41,8 +41,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String provider = oAuth2User.getAttribute("provider");
         String providerId = oAuth2User.getAttribute("id");
 
-        log.info("provider id: {}", providerId);
-
         String memberOauthId = provider + "_" + providerId;
 
         if (!userDetailsService.userExists(memberOauthId)) {
@@ -53,8 +51,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         log.info("토큰 생성 시작");
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", providerId);
         claims.put("provider", provider);
+        claims.put("id", providerId);
         String accessToken = jwtProvider.createAccessToken(claims);
         String refreshToken = jwtProvider.createRefreshToken();
 
