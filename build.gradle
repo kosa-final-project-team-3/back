@@ -30,6 +30,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'jakarta.servlet:jakarta.servlet-api:6.1.0'
 
+    // JGit - 깃 라이브러리
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:7.0.0.202409031743-r'
+
     // OAuth
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
