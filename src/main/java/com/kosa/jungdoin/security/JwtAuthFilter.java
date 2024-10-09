@@ -46,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 		if (request.getMethod().equals("GET")) {
 			excludePatterns = List.of(
-
+					"/api/jwt/refresh"
 			);
 			return excludePatterns.stream().anyMatch(path::startsWith);
 		}
@@ -62,8 +62,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException,
-		IOException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 		String token = cookieManager.getCookie(request, ACCESS_TOKEN);
 		String memberOAuthId = null;
 
@@ -77,7 +77,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 					cookieManager.deleteCookie(response, ACCESS_TOKEN);
 					cookieManager.deleteCookie(response, REFRESH_TOKEN);
 					cookieManager.setSecureHttpOnlyCookie(response, tokens.get(ACCESS_TOKEN), ACCESS_TOKEN,
-						jwtProvider.getAccessTokenExpirationPeriod());
+						jwtProvider.getRefreshTokenExpirationPeriod());
 					cookieManager.setSecureHttpOnlyCookie(response, tokens.get(REFRESH_TOKEN), REFRESH_TOKEN,
 						jwtProvider.getRefreshTokenExpirationPeriod());
 
