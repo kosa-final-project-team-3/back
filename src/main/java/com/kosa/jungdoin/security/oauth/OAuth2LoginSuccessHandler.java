@@ -5,7 +5,6 @@ import com.kosa.jungdoin.common.Role;
 import com.kosa.jungdoin.common.jwt.JwtProvider;
 import com.kosa.jungdoin.security.CustomUserDetails;
 import com.kosa.jungdoin.security.CustomUserDetailsService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication) throws IOException {
         log.info("OAuth2 Login 성공!");
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
@@ -56,10 +55,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String accessToken = jwtProvider.createAccessToken(claims);
         String refreshToken = jwtProvider.createRefreshToken();
 
-        cookieManager.setSecureHttpOnlyCookie(response, accessToken, CookieManager.ACCESS_TOKEN, jwtProvider.getAccessTokenExpirationPeriod());
+        cookieManager.setSecureHttpOnlyCookie(response, accessToken, CookieManager.ACCESS_TOKEN, jwtProvider.getRefreshTokenExpirationPeriod());
         cookieManager.setSecureHttpOnlyCookie(response, refreshToken, CookieManager.REFRESH_TOKEN, jwtProvider.getRefreshTokenExpirationPeriod());
-        cookieManager.setCookie(response, provider, "provider", jwtProvider.getAccessTokenExpirationPeriod());
-        cookieManager.setCookie(response, providerId, "id", jwtProvider.getAccessTokenExpirationPeriod());
+        cookieManager.setCookie(response, provider, "provider", jwtProvider.getRefreshTokenExpirationPeriod());
+        cookieManager.setCookie(response, providerId, "id", jwtProvider.getRefreshTokenExpirationPeriod());
         response.sendRedirect("http://localhost:5173/");
 
         log.info("토큰 생성 완료 -> 클라이언트 브라우저 쿠키에 주입 완료");
