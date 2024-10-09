@@ -25,10 +25,10 @@ public class Media extends BaseEntity {
 	@Column(name = "media_seq")
 	private Long mediaSeq;
 	@ManyToOne
-	@JoinColumn(name = "media_type_code")
+	@JoinColumn(name = "media_type_code", nullable = false)
 	private MediaType mediaTypeCode;
 	@Column(name = "resource_id", nullable = false)
 	private Long resourceId;
-	@Column(name = "url", nullable = false)
+	@Column(name = "url", nullable = false, unique = true)
 	private String url;
 }
