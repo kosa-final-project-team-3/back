@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum CustomExceptionStatusCode {
+public enum CustomExceptionCode {
 	/*
 	 * 400
 	 */
