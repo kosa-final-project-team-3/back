@@ -56,6 +56,8 @@ public class CustomUserDetails implements UserDetails {
 		this.trial = member.getTrial();
 		this.address = member.getAddress();
 		this.tall = member.getTall();
+		this.username = member.getUsername();
+		this.memberOAuthId = member.getMemberOAuthId();
 	}
 
 	public CustomUserDetails(Role role, String socialType, String memberOAuthId) {
@@ -85,7 +87,7 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singleton(new SimpleGrantedAuthority("REGULAR"));
+		return Collections.singleton(new SimpleGrantedAuthority(role.getRole()));
 	}
 
 	@Override
@@ -96,25 +98,5 @@ public class CustomUserDetails implements UserDetails {
 	@Override
 	public String getUsername() {
 		return this.username;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
 	}
 }

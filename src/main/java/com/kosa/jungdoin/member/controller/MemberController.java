@@ -3,12 +3,13 @@ package com.kosa.jungdoin.member.controller;
 import com.kosa.jungdoin.member.dto.BodyWeightLogDTO;
 import com.kosa.jungdoin.member.service.BodyWeightLogService;
 import com.kosa.jungdoin.member.service.MemberService;
+import com.kosa.jungdoin.security.CustomUserDetails;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/member")
@@ -25,7 +27,22 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final BodyWeightLogService bodyWeightLogService;
+
+    @GetMapping("/me")
+    public ResponseEntity<Object> getContextUserInfo() {
+        Map<String, Object> resultMap = new HashMap<>();
+        try {
+            CustomUserDetails userDetails =
+                    (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            resultMap.put("oauth", userDetails.getMemberOAuthId());
+            resultMap.put("username", userDetails.getUsername());
+            resultMap.put("role", userDetails.getRole());
+
+            return ResponseEntity.ok(resultMap);
+        } catch (ClassCastException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 
     @GetMapping("/logout")
     public ResponseEntity<Object> logout(HttpServletResponse response) {
