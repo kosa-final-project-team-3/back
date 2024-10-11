@@ -5,14 +5,13 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kosa.jungdoin.entity.Member;
 import com.kosa.jungdoin.entity.MemberExerciseLog;
 import com.kosa.jungdoin.member.MemberExerciseLogRepository;
-import com.kosa.jungdoin.member.MemberRepository;
 import com.kosa.jungdoin.member.dto.MemberExerciseLogDto;
+import com.kosa.jungdoin.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
