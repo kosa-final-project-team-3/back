@@ -40,6 +40,7 @@ public class MemberController {
             resultMap.put("oauth", userDetails.getMemberOAuthId());
             resultMap.put("username", userDetails.getUsername());
             resultMap.put("role", userDetails.getRole());
+            resultMap.put("id", userDetails.getId());
 
             return ResponseEntity.ok(resultMap);
         } catch (ClassCastException e) {
