@@ -46,8 +46,9 @@ logging:
     org:
       hibernate:
         SQL: debug
-        type:
-          descriptor: trace
+        orm:
+          jdbc:
+            bind: TRACE
 
 custom:
   jwt:
