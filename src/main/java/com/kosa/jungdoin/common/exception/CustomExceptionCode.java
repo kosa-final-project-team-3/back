@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum CustomExceptionStatusCode {
+public enum CustomExceptionCode {
 	/*
 	 * 400
 	 */
@@ -30,6 +30,7 @@ public enum CustomExceptionStatusCode {
 	 * 403
 	 */
 	UNAUTHORIZED_ACCESS(HttpStatus.FORBIDDEN, "잘못된 접근입니다."),
+	INSUFFICIENT_PERMISSIONS(HttpStatus.FORBIDDEN, "해당 작업을 수행할 권한이 없습니다."),
 	/*
 	 * 404
 	 */

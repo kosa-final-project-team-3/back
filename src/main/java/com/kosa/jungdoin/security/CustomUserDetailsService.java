@@ -2,7 +2,7 @@ package com.kosa.jungdoin.security;
 
 import com.kosa.jungdoin.common.exception.CustomException;
 import com.kosa.jungdoin.entity.Member;
-import com.kosa.jungdoin.member.MemberRepository;
+import com.kosa.jungdoin.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

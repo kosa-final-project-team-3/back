@@ -1,4 +1,4 @@
-package com.kosa.jungdoin.member;
+package com.kosa.jungdoin.member.repository;
 
 import java.util.Optional;
 
