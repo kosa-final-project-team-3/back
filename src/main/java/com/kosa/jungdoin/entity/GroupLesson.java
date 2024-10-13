@@ -40,7 +40,7 @@ public class GroupLesson extends BaseEntity {
 	private Boolean done;
 	@Column(name = "content", length = 2000, nullable = false)
 	private String content;
-	@Column(name = "title", nullable = false)
+	@Column(name = "title", length = 40, nullable = false)
 	private String title;
 	@Column(name = "price", nullable = false)
 	private Integer price;

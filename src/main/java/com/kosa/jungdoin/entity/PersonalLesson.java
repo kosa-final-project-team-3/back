@@ -31,7 +31,7 @@ public class PersonalLesson extends BaseEntity {
 	private Trainer trainer;
 	@Column(name = "price", nullable = false)
 	private Integer price;
-	@Column(name = "title", length = 20, nullable = false)
+	@Column(name = "title", length = 40, nullable = false)
 	private String title;
 	@Column(name = "content", length = 2000, nullable = false)
 	private String content;
