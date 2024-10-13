@@ -60,8 +60,8 @@ public class CustomUserDetails implements UserDetails {
 		this.memberOAuthId = member.getMemberOAuthId();
 	}
 
-	public CustomUserDetails(Role role, String socialType, String memberOAuthId) {
-		this.username = memberOAuthId;
+	public CustomUserDetails(String username, Role role, String socialType, String memberOAuthId) {
+		this.username = username;
 		this.role = role;
 		this.socialType = socialType;
 		this.memberOAuthId = memberOAuthId;
@@ -71,8 +71,8 @@ public class CustomUserDetails implements UserDetails {
 		return new CustomUserDetails(member);
 	}
 
-	public static CustomUserDetails of(Role role, String socialType, String memberOAuthId) {
-		return new CustomUserDetails(role, socialType, memberOAuthId);
+	public static CustomUserDetails of(String username, Role role, String socialType, String memberOAuthId) {
+		return new CustomUserDetails(username, role, socialType, memberOAuthId);
 	}
 
 	// CustomUserDetails 의 정보를 통해 엔티티를 생성한다.
