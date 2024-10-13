@@ -1,7 +1,7 @@
 package com.kosa.jungdoin.member.service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +29,8 @@ public class MemberExerciseLogService {
 		MemberExerciseLog log = MemberExerciseLog.builder()
 			.member(member)
 			.workoutDate(logDTO.getWorkoutDate())
-			.workoutStartTime(logDTO.getWorkoutStartTime().toLocalDate())
-			.workoutEndTime(logDTO.getWorkoutEndTime().toLocalDate())
+			.workoutStartTime(LocalDateTime.parse(logDTO.getWorkoutStartTime().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+			.workoutEndTime(LocalDateTime.parse(logDTO.getWorkoutEndTime().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))
 			.content(logDTO.getContent())
 			.bodyWeight(logDTO.getBodyWeight())
 			.carb(logDTO.getCarb())
@@ -50,8 +50,8 @@ public class MemberExerciseLogService {
 			.logId(existingLog.getLogId())
 			.member(existingLog.getMember())
 			.workoutDate(logDTO.getWorkoutDate())
-			.workoutStartTime(logDTO.getWorkoutStartTime().toLocalDate())
-			.workoutEndTime(logDTO.getWorkoutEndTime().toLocalDate())
+			.workoutStartTime(LocalDateTime.parse(logDTO.getWorkoutStartTime().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+			.workoutEndTime(LocalDateTime.parse(logDTO.getWorkoutEndTime().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME))
 			.content(logDTO.getContent())
 			.bodyWeight(logDTO.getBodyWeight())
 			.carb(logDTO.getCarb())
@@ -77,8 +77,8 @@ public class MemberExerciseLogService {
 			.logId(log.getLogId())
 			.memberId(log.getMember().getMemberId())
 			.workoutDate(log.getWorkoutDate())
-			.workoutStartTime(LocalDateTime.of(log.getWorkoutStartTime(), LocalTime.MIDNIGHT))
-			.workoutEndTime(LocalDateTime.of(log.getWorkoutEndTime(), LocalTime.MIDNIGHT))
+			.workoutStartTime(log.getWorkoutStartTime())
+			.workoutEndTime(log.getWorkoutEndTime())
 			.content(log.getContent())
 			.bodyWeight(log.getBodyWeight())
 			.carb(log.getCarb())

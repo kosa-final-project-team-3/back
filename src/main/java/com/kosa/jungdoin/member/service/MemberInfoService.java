@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosa.jungdoin.entity.Member;
-import com.kosa.jungdoin.member.MemberRepository;
 import com.kosa.jungdoin.member.dto.MemberInfoDto;
+import com.kosa.jungdoin.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
