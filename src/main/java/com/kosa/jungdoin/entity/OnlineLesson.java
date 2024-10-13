@@ -27,7 +27,7 @@ public class OnlineLesson extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
 	private Trainer trainer;
-	@Column(name = "title", length = 20, nullable = false)
+	@Column(name = "title", length = 40, nullable = false)
 	private String title;
 	@Column(name = "content", length = 2000, nullable = false)
 	private String content;
