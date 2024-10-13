@@ -23,7 +23,7 @@ import com.kosa.jungdoin.member.repository.ExerciseCategoryRepository;
 import com.kosa.jungdoin.member.repository.TimeTableRepository;
 import com.kosa.jungdoin.member.repository.TrainerProfileCategoryRepository;
 import com.kosa.jungdoin.member.repository.TrainerProfileRepository;
-import com.kosa.jungdoin.member.repository.TrainerRepository;
+import com.kosa.jungdoin.trainer.repository.TrainerRepository;
 
 import lombok.RequiredArgsConstructor;
 
