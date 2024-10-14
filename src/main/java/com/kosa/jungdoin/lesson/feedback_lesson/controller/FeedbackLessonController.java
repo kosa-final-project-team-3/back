@@ -1,5 +1,6 @@
 package com.kosa.jungdoin.lesson.feedback_lesson.controller;
 
+import com.kosa.jungdoin.common.exception.UnauthorizedException;
 import com.kosa.jungdoin.lesson.feedback_lesson.dto.FeedbackLessonDTO;
 import com.kosa.jungdoin.lesson.feedback_lesson.service.FeedbackLessonService;
 import jakarta.persistence.EntityNotFoundException;
@@ -81,6 +82,8 @@ public class FeedbackLessonController {
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 }
