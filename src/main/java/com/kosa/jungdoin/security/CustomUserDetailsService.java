@@ -1,8 +1,8 @@
 package com.kosa.jungdoin.security;
 
 import com.kosa.jungdoin.common.exception.CustomException;
-import com.kosa.jungdoin.entity.Member;
-import com.kosa.jungdoin.member.repository.MemberRepository;
+import com.kosa.jungdoin.entity.BaseMember;
+import com.kosa.jungdoin.member.repository.BaseMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,11 +18,11 @@ import static com.kosa.jungdoin.common.exception.CustomExceptionCode.NOT_FOUND_U
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private final MemberRepository memberRepository;
+	private final BaseMemberRepository memberRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member user = memberRepository.findByMemberOAuthId(username)
+		BaseMember user = memberRepository.findByMemberOAuthId(username)
 				.orElseThrow(() -> new UsernameNotFoundException(NOT_FOUND_USER.name()));
 		return CustomUserDetails.of(user);
 	}
