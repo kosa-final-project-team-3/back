@@ -7,5 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidateTrainer {
+public @interface ValidateEntity {
+    Class<?> entityClass();
+    String idField();
 }

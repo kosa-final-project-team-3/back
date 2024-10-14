@@ -1,5 +1,6 @@
 package com.kosa.jungdoin.lesson.online_lesson.controller;
 
+import com.kosa.jungdoin.common.exception.UnauthorizedException;
 import com.kosa.jungdoin.lesson.online_lesson.dto.OnlineLessonDTO;
 import com.kosa.jungdoin.lesson.online_lesson.service.OnlineLessonService;
 import jakarta.persistence.EntityNotFoundException;
@@ -81,6 +82,8 @@ public class OnlineLessonController {
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (UnauthorizedException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
 }
