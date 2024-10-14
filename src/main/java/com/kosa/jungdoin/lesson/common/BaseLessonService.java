@@ -1,5 +1,7 @@
 package com.kosa.jungdoin.lesson.common;
 
+import com.kosa.jungdoin.common.annotation.RequireAuthorization;
+import com.kosa.jungdoin.common.annotation.ValidateEntity;
 import com.kosa.jungdoin.entity.Trainer;
 import com.kosa.jungdoin.trainer.repository.TrainerRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Transactional
@@ -30,6 +33,15 @@ public abstract class BaseLessonService<T, D, B> {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    @ValidateEntity(entityClass = Trainer.class, idField = "trainerId")
+    public List<D> getLessonsByTrainerId(Long trainerId) {
+        List<T> lessons = findLessonsByTrainerId(trainerId);
+        return lessons.stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
     public D createLesson(D dto) {
         T entity = createEntityFromDTO(dto);
         T savedEntity = repository.save(entity);
@@ -49,6 +61,7 @@ public abstract class BaseLessonService<T, D, B> {
         return convertToDTO(savedEntity);
     }
 
+    @RequireAuthorization
     public void deleteLesson(Long lessonId) {
         if (!repository.existsById(lessonId)) {
             throw new IllegalArgumentException("Lesson not found");
@@ -56,23 +69,13 @@ public abstract class BaseLessonService<T, D, B> {
         repository.deleteById(lessonId);
     }
 
-    protected abstract D convertToDTO(T lesson);
-
-    protected abstract T createEntityFromDTO(D dto);
-
-    protected abstract T updateEntityFromDTO(D dto);
-
-    protected Trainer getTrainerIfIdPresent(Long trainerId) {
-        if (trainerId != null) {
-            return trainerRepository.findById(trainerId)
-                    .orElseThrow(() -> new IllegalArgumentException("Trainer not found"));
+    protected Trainer getTrainer(Long trainerId) {
+        Optional<Trainer> opTrainer = trainerRepository.findById(trainerId);
+        if (opTrainer.isEmpty()) {
+            throw new IllegalArgumentException("Trainer not found");
         }
-        return null;
+        return opTrainer.get();
     }
-
-    protected abstract B getBuilder();
-
-    protected abstract Function<B, T> getBuildFunction();
 
     protected T createEntityFromBuilder(B builder) {
         return getBuildFunction().apply(builder);
@@ -84,15 +87,27 @@ public abstract class BaseLessonService<T, D, B> {
         return builder;
     }
 
-    protected abstract void setCommonFields(B builder, T entity);
-
     protected T patchEntityFromDTO(T entity, D dto) {
         B builder = initializeBuilder(entity);
         updateBuilderFromDTO(builder, dto);
         return createEntityFromBuilder(builder);
     }
 
+    protected abstract D convertToDTO(T lesson);
+
+    protected abstract T createEntityFromDTO(D dto);
+
+    protected abstract T updateEntityFromDTO(D dto);
+
+    protected abstract B getBuilder();
+
+    protected abstract Function<B, T> getBuildFunction();
+
+    protected abstract void setCommonFields(B builder, T entity);
+
     protected abstract void updateBuilderFromDTO(B builder, D dto);
 
     protected abstract T getExistEntity(D dto);
+
+    protected abstract List<T> findLessonsByTrainerId(Long trainerId);
 }
