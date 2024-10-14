@@ -43,7 +43,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String memberOauthId = provider + "_" + providerId;
 
         if (!userDetailsService.userExists(memberOauthId)) {
-            userDetailsService.createUser(new CustomUserDetails(Role.REGULAR, provider, memberOauthId));
+            userDetailsService.createUser(new CustomUserDetails(
+                    oAuth2User.getAttribute("nickname"), Role.REGULAR, provider, memberOauthId)
+            );
         }
         log.info("객체 생성 완료 - {}", userDetailsService.loadUserByUsername(memberOauthId).toString());
 

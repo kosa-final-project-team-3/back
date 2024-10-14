@@ -1,5 +1,9 @@
 package com.kosa.jungdoin.entity;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,9 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -33,9 +34,9 @@ public class MemberExerciseLog extends BaseEntity {
 	@Column(name = "workout_date", nullable = false)
 	private LocalDate workoutDate;
 	@Column(name = "workout_start_time")
-	private LocalDate workoutStartTime;
+	private LocalDateTime workoutStartTime;
 	@Column(name = "workout_end_time")
-	private LocalDate workoutEndTime;
+	private LocalDateTime workoutEndTime;
 	@Column(name = "content", length = 2000)
 	private String content;
 	@Column(name = "body_weight", precision = 4, scale = 1)

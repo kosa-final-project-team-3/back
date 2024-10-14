@@ -23,11 +23,15 @@ public class OAuth2Attributes {
 	// 소셜 타입별 로그인 유저 정보
 	private String id;
 	private String provider;
+	private String nickname;
+	private String profileImgUrl;
 
 	@Builder
-	public OAuth2Attributes(String id, String provider) {
+	public OAuth2Attributes(String id, String provider, String nickname, String profileImgUrl) {
 		this.id = id;
 		this.provider = provider;
+		this.nickname = nickname;
+		this.profileImgUrl = profileImgUrl;
 	}
 
 	/**
@@ -45,9 +49,12 @@ public class OAuth2Attributes {
 	}
 
 	private static OAuth2Attributes ofKakao(OAuth2User oAuth2User) {
+		Map<String, String> properties = oAuth2User.getAttribute("properties");
 		return new OAuth2Attributes(
 			oAuth2User.getAttribute("id").toString(),
-			KAKAO.getProvider()
+			KAKAO.getProvider(),
+			properties.get("nickname"),
+			properties.get("profile_image")
 		);
 	}
 
@@ -58,6 +65,8 @@ public class OAuth2Attributes {
 		Map<String, Object> changedAttributes = new HashMap<>();
 		changedAttributes.put("id", this.id);
 		changedAttributes.put("provider", this.provider);
+		changedAttributes.put("nickname", this.nickname);
+		changedAttributes.put("profile_img_url", this.profileImgUrl);
 
 		return changedAttributes;
 	}
