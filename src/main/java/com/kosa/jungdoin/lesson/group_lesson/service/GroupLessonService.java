@@ -1,6 +1,5 @@
 package com.kosa.jungdoin.lesson.group_lesson.service;
 
-import com.kosa.jungdoin.common.annotation.ValidateTrainer;
 import com.kosa.jungdoin.entity.GroupLesson;
 import com.kosa.jungdoin.entity.Trainer;
 import com.kosa.jungdoin.lesson.common.BaseLessonService;
@@ -11,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -67,11 +67,10 @@ public class GroupLessonService
     }
 
     @Override
-    @ValidateTrainer
     protected void updateBuilderFromDTO(GroupLesson.GroupLessonBuilder<?, ?> builder, GroupLessonDTO dto) {
-        Trainer updatedTrainer = getTrainerIfIdPresent(dto.getTrainerId());
-        if (updatedTrainer != null)
-            builder.trainer(updatedTrainer);
+        Trainer trainer = getTrainer(dto.getTrainerId());
+        if (trainer != null)
+            builder.trainer(trainer);
         if (dto.getMaxCnt() != null)
             builder.maxCnt(dto.getMaxCnt());
         if (dto.getStartDate() != null)
@@ -102,9 +101,14 @@ public class GroupLessonService
     }
 
     @Override
-    @ValidateTrainer
+    protected List<GroupLesson> findLessonsByTrainerId(Long trainerId) {
+        GroupLessonRepository groupLessonRepository = (GroupLessonRepository) repository;
+        return groupLessonRepository.findGroupLessonsByTrainerMemberId(trainerId);
+    }
+
+    @Override
     protected GroupLesson createEntityFromDTO(GroupLessonDTO dto) {
-        Trainer trainer = trainerRepository.findById(dto.getTrainerId()).get();
+        Trainer trainer = getTrainer(dto.getTrainerId());
         return GroupLesson.builder()
                 .trainer(trainer)
                 .maxCnt(dto.getMaxCnt())
@@ -121,9 +125,8 @@ public class GroupLessonService
     }
 
     @Override
-    @ValidateTrainer
     protected GroupLesson updateEntityFromDTO(GroupLessonDTO dto) {
-        Trainer trainer = trainerRepository.findById(dto.getTrainerId()).get();
+        Trainer trainer = getTrainer(dto.getTrainerId());
         return GroupLesson.builder()
                 .groupLessonId(dto.getLessonId())
                 .trainer(trainer)

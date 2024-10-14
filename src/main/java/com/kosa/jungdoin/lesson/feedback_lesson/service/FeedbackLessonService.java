@@ -1,6 +1,5 @@
 package com.kosa.jungdoin.lesson.feedback_lesson.service;
 
-import com.kosa.jungdoin.common.annotation.ValidateTrainer;
 import com.kosa.jungdoin.entity.FeedbackLesson;
 import com.kosa.jungdoin.entity.Trainer;
 import com.kosa.jungdoin.lesson.common.BaseLessonService;
@@ -11,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -51,11 +51,10 @@ public class FeedbackLessonService
     }
 
     @Override
-    @ValidateTrainer
     protected void updateBuilderFromDTO(FeedbackLesson.FeedbackLessonBuilder<?, ?> builder, FeedbackLessonDTO dto) {
-        Trainer updatedTrainer = getTrainerIfIdPresent(dto.getTrainerId());
-        if (updatedTrainer != null)
-            builder.trainer(updatedTrainer);
+        Trainer trainer = getTrainer(dto.getTrainerId());
+        if (trainer != null)
+            builder.trainer(trainer);
         if (dto.getContent() != null)
             builder.content(dto.getContent());
         if (dto.getPrice() != null)
@@ -70,9 +69,14 @@ public class FeedbackLessonService
     }
 
     @Override
-    @ValidateTrainer
+    protected List<FeedbackLesson> findLessonsByTrainerId(Long trainerId) {
+        FeedbackLessonRepository feedbackLessonRepository = (FeedbackLessonRepository) repository;
+        return feedbackLessonRepository.findFeedbackLessonsByTrainerMemberId(trainerId);
+    }
+
+    @Override
     protected FeedbackLesson createEntityFromDTO(FeedbackLessonDTO dto) {
-        Trainer trainer = trainerRepository.findById(dto.getTrainerId()).get();
+        Trainer trainer = getTrainer(dto.getTrainerId());
         return FeedbackLesson.builder()
                 .trainer(trainer)
                 .content(dto.getContent())
@@ -81,9 +85,8 @@ public class FeedbackLessonService
     }
 
     @Override
-    @ValidateTrainer
     protected FeedbackLesson updateEntityFromDTO(FeedbackLessonDTO dto) {
-        Trainer trainer = trainerRepository.findById(dto.getTrainerId()).get();
+        Trainer trainer = getTrainer(dto.getTrainerId());
         return FeedbackLesson.builder()
                 .feedbackLessonId(dto.getLessonId())
                 .trainer(trainer)
