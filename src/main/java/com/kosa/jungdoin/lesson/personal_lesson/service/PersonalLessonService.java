@@ -1,6 +1,5 @@
 package com.kosa.jungdoin.lesson.personal_lesson.service;
 
-import com.kosa.jungdoin.common.annotation.ValidateTrainer;
 import com.kosa.jungdoin.entity.PersonalLesson;
 import com.kosa.jungdoin.entity.Trainer;
 import com.kosa.jungdoin.lesson.common.BaseLessonService;
@@ -11,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -57,11 +57,10 @@ public class PersonalLessonService
     }
 
     @Override
-    @ValidateTrainer
     protected void updateBuilderFromDTO(PersonalLesson.PersonalLessonBuilder<?, ?> builder, PersonalLessonDTO dto) {
-        Trainer updatedTrainer = getTrainerIfIdPresent(dto.getTrainerId());
-        if (updatedTrainer != null)
-            builder.trainer(updatedTrainer);
+        Trainer trainer = getTrainer(dto.getTrainerId());
+        if (trainer != null)
+            builder.trainer(trainer);
         if (dto.getTitle() != null)
             builder.title(dto.getTitle());
         if (dto.getContent() != null)
@@ -82,9 +81,14 @@ public class PersonalLessonService
     }
 
     @Override
-    @ValidateTrainer
+    protected List<PersonalLesson> findLessonsByTrainerId(Long trainerId) {
+        PersonalLessonRepository personalLessonRepository = (PersonalLessonRepository) repository;
+        return personalLessonRepository.findPersonalLessonsByTrainerMemberId(trainerId);
+    }
+
+    @Override
     protected PersonalLesson createEntityFromDTO(PersonalLessonDTO dto) {
-        Trainer trainer = trainerRepository.findById(dto.getTrainerId()).get();
+        Trainer trainer = getTrainer(dto.getTrainerId());
         return PersonalLesson.builder()
                 .trainer(trainer)
                 .title(dto.getTitle())
@@ -96,9 +100,8 @@ public class PersonalLessonService
     }
 
     @Override
-    @ValidateTrainer
     protected PersonalLesson updateEntityFromDTO(PersonalLessonDTO dto) {
-        Trainer trainer = trainerRepository.findById(dto.getTrainerId()).get();
+        Trainer trainer = getTrainer(dto.getTrainerId());
         return PersonalLesson.builder()
                 .personalLessonId(dto.getLessonId())
                 .trainer(trainer)

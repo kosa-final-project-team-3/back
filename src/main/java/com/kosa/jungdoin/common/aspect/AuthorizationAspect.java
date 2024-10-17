@@ -2,7 +2,7 @@ package com.kosa.jungdoin.common.aspect;
 
 import com.kosa.jungdoin.common.annotation.RequireAuthorization;
 import com.kosa.jungdoin.common.exception.UnauthorizedException;
-import com.kosa.jungdoin.entity.Member;
+import com.kosa.jungdoin.entity.BaseMember;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,11 +22,11 @@ public class AuthorizationAspect {
     @Before("@annotation(com.kosa.jungdoin.common.annotation.RequireAuthorization)")
     public void checkAuthorization(JoinPoint joinPoint) throws Throwable {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
+        if (authentication == null || !authentication.isAuthenticated() || !(authentication instanceof BaseMember)) {
             throw new UnauthorizedException();
         }
 
-        Member currentMember = (Member) authentication.getPrincipal();
+        BaseMember currentMember = (BaseMember) authentication.getPrincipal();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         RequireAuthorization annotation = method.getAnnotation(RequireAuthorization.class);

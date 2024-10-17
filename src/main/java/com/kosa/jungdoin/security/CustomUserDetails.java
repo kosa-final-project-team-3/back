@@ -1,21 +1,22 @@
 package com.kosa.jungdoin.security;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.kosa.jungdoin.common.Role;
+import com.kosa.jungdoin.entity.BaseMember;
 import com.kosa.jungdoin.entity.Member;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,15 +50,13 @@ public class CustomUserDetails implements UserDetails {
 		this.tall = tall;
 	}
 
-	public CustomUserDetails(Member member) {
+	public CustomUserDetails(BaseMember member) {
 		this.id = member.getMemberId();
 		this.role = member.getRole();
 		this.birth = member.getBirth();
 		this.gender = member.getGender();
 		this.phone = member.getPhone();
 		this.trial = member.getTrial();
-		this.address = member.getAddress();
-		this.tall = member.getTall();
 		this.username = member.getUsername();
 		this.memberOAuthId = member.getMemberOAuthId();
 	}
@@ -69,7 +68,7 @@ public class CustomUserDetails implements UserDetails {
 		this.memberOAuthId = memberOAuthId;
 	}
 
-	public static CustomUserDetails of(Member member) {
+	public static CustomUserDetails of(BaseMember member) {
 		return new CustomUserDetails(member);
 	}
 
