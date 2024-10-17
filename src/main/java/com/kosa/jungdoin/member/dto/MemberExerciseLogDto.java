@@ -2,7 +2,7 @@ package com.kosa.jungdoin.member.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +17,8 @@ public class MemberExerciseLogDto {
 	private Long logId;
 	private Long memberId;
 	private LocalDate workoutDate;
-	private LocalDateTime workoutStartTime;
-	private LocalDateTime workoutEndTime;
+	private LocalTime workoutStartTime;
+	private LocalTime workoutEndTime;
 	private String content;
 	private BigDecimal bodyWeight;
 	private Integer carb;
