@@ -28,7 +28,7 @@ public class TrainerProfile extends BaseEntity {
 	private Long trainerProfileId;
 	@ManyToOne
 	@JoinColumn(name = "member_id", nullable = false)
-	private Trainer trainer;
+	private BaseMember member;
 	@ManyToOne
 	@JoinColumn(name = "category_code", nullable = false)
 	private TrainerProfileCategory categoryCode;

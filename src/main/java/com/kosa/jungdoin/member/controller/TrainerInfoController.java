@@ -1,8 +1,9 @@
 package com.kosa.jungdoin.member.controller;
 
-import java.util.List;
-import java.util.Map;
-
+import com.kosa.jungdoin.member.dto.TrainerInfoDTO;
+import com.kosa.jungdoin.member.service.TrainerInfoService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kosa.jungdoin.member.dto.TrainerInfoDTO;
-import com.kosa.jungdoin.member.service.TrainerInfoService;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/trainer")
@@ -65,9 +63,13 @@ public class TrainerInfoController {
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<?> saveTrainerProfiles(@RequestBody List<TrainerInfoDTO> profiles) {
-		trainerInfoService.saveTrainerProfile(profiles);
-		return ResponseEntity.ok().body("Trainer profiles saved successfully");
+	public ResponseEntity<Object> saveTrainerProfiles(@RequestBody List<TrainerInfoDTO> profiles) {
+		Map<String, Object> resultMap = trainerInfoService.saveTrainerProfile(profiles);
+		List<Long> profileIdList = (List<Long>) resultMap.get("profileIdList");
+		if (profileIdList.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok().body(resultMap);
 	}
 	
 }
