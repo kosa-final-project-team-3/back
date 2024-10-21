@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kosa.jungdoin.entity.Member;
 import com.kosa.jungdoin.entity.MemberExerciseLog;
-import com.kosa.jungdoin.member.MemberExerciseLogRepository;
+import com.kosa.jungdoin.member.repository.MemberExerciseLogRepository;
 import com.kosa.jungdoin.member.dto.MemberExerciseLogDto;
 import com.kosa.jungdoin.member.repository.MemberRepository;
 
