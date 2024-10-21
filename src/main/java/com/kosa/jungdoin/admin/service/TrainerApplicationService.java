@@ -92,7 +92,7 @@ public class TrainerApplicationService {
                 Trainer.builder()
                         .exerciseCategory(
                                 exerciseCategoryRepository.
-                                        findById("001")
+                                        findById(application.getExerciseCategory().getExerciseCategoryCode())
                                         .orElseThrow(() -> new IllegalArgumentException("Category not found")))
                         .baseMember(savedMember)
                         .build());
