@@ -1,11 +1,11 @@
 package com.kosa.jungdoin.member.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TrainerInfoDTO {
 	private Long trainerProfileId;
-	private Long trainerId;
+	private Long memberId;
 	private String categoryCode;
 	private String categoryName;
 	private String title;
